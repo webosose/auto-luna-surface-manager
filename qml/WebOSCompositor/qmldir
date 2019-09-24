@@ -1,0 +1,7 @@
+module WebOSCompositor
+
+DefaultSettings 1.0 WebOSAutoDefaultSettings.qml
+ViewStateController 1.0 controllers/WebOSAutoViewStateController.qml
+WebOSAutoSystemUIWindowModel 1.0 models/WebOSAutoSystemUIWindowModel.qml
+WebOSAutoSystemUIView 1.0 views/WebOSAutoSystemUIView.qml
+ViewsRoot 1.0 views/WebOSAutoViewsRoot.qml
