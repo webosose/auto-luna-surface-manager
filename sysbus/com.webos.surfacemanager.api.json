@@ -1,17 +1,12 @@
 {
-    "launcher.control": [
+    "surfacemanager.devutility": [
+        "com.webos.surfacemanager/captureCompositorOutput"
+    ],
+    "surfacemanager.operation": [
         "com.webos.surfacemanager/closeByAppId",
         "com.webos.surfacemanager/setAppMirroring"
     ],
-    "launcher.status": [
-        "com.webos.surfacemanager/getAppMirroring",
-        "com.webos.surfacemanager/getForegroundAppInfo"
-    ],
-    "surfaces.control": [
-        "com.webos.surfacemanager/closeByAppId",
-        "com.webos.surfacemanager/setAppMirroring"
-    ],
-    "surfaces.status": [
+    "surfacemanager.query": [
         "com.webos.surfacemanager/getAppMirroring",
         "com.webos.surfacemanager/getForegroundAppInfo"
     ]
