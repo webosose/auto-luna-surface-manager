@@ -1,4 +1,4 @@
-// Copyright (c) 2019 LG Electronics, Inc.
+// Copyright (c) 2019-2020 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -86,10 +86,15 @@ FocusScope {
         }
     }
 
-    NotificationView {
+    WebOSAutoSystemUIView {
         id: notificationViewId
         objectName: "notificationView" + compositorWindow.displayId
-        anchors.fill: parent
+        layerNumber: 14
+        appId: Settings.local.notificationView.appId
+        model: WebOSAutoSystemUIWindowModel {
+            objectName: "notificationWindowModel" + compositorWindow.displayId
+            appId: Settings.local.notificationView.appId
+        }
     }
 
     WebOSAutoSystemUIView {

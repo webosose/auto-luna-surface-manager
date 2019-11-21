@@ -1,4 +1,4 @@
-// Copyright (c) 2019 LG Electronics, Inc.
+// Copyright (c) 2019-2020 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -65,99 +65,8 @@ QtObject {
         "localization": {
             "imports": []
         },
-        "notification": {
-            "scrimOpacity": 0.3,
-            "timeout": 15000,
-            "button": {
-                "width": 300,
-                "height": 85,
-                "backgroundColor": "#ffffff",
-                "activatedColor": "#cf0652",
-                "fontName": "Miso",
-                "fontSize": 52,
-                "textColor": "#4b4b4b",
-                "textActivatedColor": "#ffffff"
-            },
-            "closeButton": {
-                "size": 60,
-                "margins": 10,
-                "foregroundColor": "#ffffff",
-                "backgroundColor": "#4d4d4d",
-                "activatedColor": "#cf0652"
-            },
-            "alert": {
-                "height": 320,
-                "buttonMargins": 40,
-                "foregroundColor": "#ffffff",
-                "backgroundColor": "#4d4d4d",
-                "headerFont": "Miso",
-                "fontName": "Museo Sans",
-                "fontSize": 82,
-                "fontWeight": Font.Bold,
-                "descriptionFontSize": 26,
-                "descriptionLineHeight": 36,
-                "descriptionTopMargin": 20,
-                "iconSize": 96,
-                "iconMargins": 63,
-                "textMargins": 40,
-                "textIconWidth": 204,
-                "textWidth": 940,
-                "slideAnimationDuration": 500
-            },
-            "toast": {
-                "width": 760,
-                "height": 120,
-                "margins": 20,
-                "foregroundColor": "#ffffff",
-                "backgroundColor": "#4d4d4d",
-                "activatedColor": "#cf0652",
-                "iconSize": 80,
-                "fontName": "Museo Sans",
-                "fontSize": 26,
-                "fontWeight": Font.Bold,
-                "textLineHeight": 40,
-                "lineLimitNormal": 2,
-                "lineLimitExpandable": 2,
-                "timeout": 5000,
-                "slideAnimationDuration": 500
-            },
-            "pincodePrompt": {
-                "height": 320,
-                "backgroundColor": "#4d4d4d",
-                "titleColor": "#d0d0d0",
-                "titleFontFamilyName": "Miso",
-                "titleFontSize": 73,
-                "titleTextHeight": 86,
-                "titleTextLeftMargin": 36,
-                "titleTextTopMargin": 29,
-                "textMaxLineCount": 1,
-                "boxSize": 100,
-                "buttonRowBottomMargin": 10,
-                "buttonRowLeftMargin": 36,
-                "buttonRowRightMargin": 80,
-                "buttonRowSpacing": 6,
-                "inputBoxRowLeftMargin": 36,
-                "inputBoxRowRightMargin": 80,
-                "inputBoxRowSpacing": 20,
-                "inputBoxRowTopMargin": 14,
-                "numOfPad": 10,
-                "numOfPWPad": 4,
-                "numPadBackButtonWidth": 172,
-                "numPadButtonBackLeftMargin": 76,
-                "numPadButtonConfirmLeftMargin": 10,
-                "numPadButtonConfirmWidth": 172,
-                "numPadButtonHeight": 60,
-                "numPadButtonWidth": 132,
-                "numPadActiveColor": "#cf0652",
-                "numPadBorderWidth": 5,
-                "numPadColor": "#696969",
-                "numPadNormalFontColor": "#eeeeee",
-                "numPadFontActiveColor": "#ffffff",
-                "numPadFontDisabledColor": "#8b8b8b",
-                "numPadFontFamilyName": "Museo Sans",
-                "numPadFontSize": 28,
-                "slideAnimationDuration": 500
-            }
+        "notificationView": {
+            "appId": "com.webos.app.notification"
         },
         "voiceAssistantView": {
             "appId": "com.webos.app.alexaauto"
