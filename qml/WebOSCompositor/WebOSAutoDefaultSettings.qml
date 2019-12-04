@@ -72,7 +72,9 @@ QtObject {
             "appId": "com.webos.app.alexaauto"
         },
         "volumeView": {
-            "appId": "com.webos.app.volume"
+            "appId": "com.webos.app.volume",
+            "hotspotThickness": 10,
+            "hotspotThreshold": 100
         }
     }
 }

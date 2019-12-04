@@ -98,10 +98,10 @@ Item {
     }
 
     Connections {
-        target: views.homeHotspotTop
+        target: views.volumeHotspotTop
         onTriggered: {
-            if (views.home)
-                views.home.show();
+            if (views.volume)
+                views.volume.show();
         }
     }
 }
