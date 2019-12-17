@@ -132,10 +132,10 @@ BaseLunaServiceAPI {
             }
         }
 
-        function __unsubscribe() {
+        function __unsubscribe(method) {
             // Count decreases after subscriptionAboutToCancel is handled.
             // So it is the last subscription being cancelled if the count is 1.
-            if (root.subscribersCount("getAppMirroring") == 1) {
+            if (method == "getAppMirroring" && root.subscribersCount("getAppMirroring") == 1) {
                 for (var i = 0; i < compositor.windows.length; i++)
                     compositor.windows[i].mirroringStateChanged.disconnect(__replySubscription);
                 root.subscriptionAboutToCancel.disconnect(__unsubscribe);
