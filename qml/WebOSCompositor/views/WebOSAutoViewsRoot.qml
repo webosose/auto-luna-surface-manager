@@ -27,7 +27,6 @@ FocusScope {
     property alias home: homeViewId
     property alias popup: popupViewId
     property alias keyboard: keyboardViewId
-    property alias voiceAssistant: voiceAssistantViewId
     property alias notification: notificationViewId
     property alias volume: volumeViewId
     property alias homeHotspotTop: homeHotspotTopId
@@ -73,17 +72,6 @@ FocusScope {
         id: keyboardViewId
         objectName: "keyboardView" + compositorWindow.displayId
         model: KeyboardWindowModel {}
-    }
-
-    WebOSAutoSystemUIView {
-        id: voiceAssistantViewId
-        objectName: "voiceAssistantView" + compositorWindow.displayId
-        layerNumber: 10
-        appId: Settings.local.voiceAssistantView.appId
-        model: WebOSAutoSystemUIWindowModel {
-            objectName: "voiceAssistantWindowModel" + compositorWindow.displayId
-            appId: Settings.local.voiceAssistantView.appId
-        }
     }
 
     NotificationView {
