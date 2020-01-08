@@ -159,6 +159,9 @@ QtObject {
                 "slideAnimationDuration": 500
             }
         },
+        "voiceAssistantView": {
+            "appId": "com.webos.app.alexaauto"
+        },
         "volumeView": {
             "appId": "com.webos.app.volume"
         }
