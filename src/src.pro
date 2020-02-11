@@ -1,4 +1,6 @@
-# Copyright (c) 2019-2020 LG Electronics, Inc.
+# @@@LICENSE
+#
+# Copyright (c) 2020 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,15 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# SPDX-License-Identifier: Apache-2.0
+# LICENSE@@@
 
 TEMPLATE = subdirs
-
-SUBDIRS = \
-    qml \
-    src \
-    startup
-
-CONFIG += webos-service
-
-WEBOS_SYSBUS_DIR = sysbus
+CONFIG += ordered
+SUBDIRS += plugins
