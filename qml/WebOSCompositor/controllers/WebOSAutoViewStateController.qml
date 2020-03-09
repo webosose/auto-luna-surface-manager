@@ -27,6 +27,10 @@ Item {
 
     WebOSAutoDebugPatternController { }
 
+    Component.onCompleted: {
+        SessionManager.init();
+    }
+
     Connections {
         target: views.fullscreen
         onSurfaceAdded: {

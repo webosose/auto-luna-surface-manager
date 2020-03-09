@@ -1,4 +1,4 @@
-// Copyright (c) 2019 LG Electronics, Inc.
+// Copyright (c) 2019-2020 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,10 +27,12 @@ SystemUIView {
     function show() {
         var params = {};
         params["displayAffinity"] = compositorWindow.displayId;
-
-        console.info("WebOSAutoSystemUIView: launching the target app:", root.appId);
+        var sessionId = SessionManager.getSessionByDisplay(compositorWindow.displayId);
+        if (!sessionId)
+            console.warn("WebOSAutoSystemUIView: sessionId is not valid");
+        console.info("WebOSAutoSystemUIView: launching the target app:", root.appId + ' (with sessionId: ' + sessionId + ')');
         LS.adhoc.call("luna://com.webos.applicationManager", "/launch",
-            "{\"id\":\"" + root.appId + "\", \"params\":" + JSON.stringify(params) + "}");
+            "{\"id\":\"" + root.appId + "\", \"params\":" + JSON.stringify(params) + "}", undefined, sessionId);
     }
 
     function hide() {

@@ -1,6 +1,10 @@
 module WebOSCompositor
 
+# Singleton types
+singleton SessionManager 1.0 global/WebOSAutoSessionManagerService.qml
+
 DefaultSettings 1.0 WebOSAutoDefaultSettings.qml
+LunaServiceSubscriptions 1.0 WebOSLunaServiceSubscriptions.qml
 WebOSAutoDebugPatternController 1.0 controllers/WebOSAutoDebugPatternController.qml
 ViewStateController 1.0 controllers/WebOSAutoViewStateController.qml
 BaseLunaServiceAPI 1.0 services/WebOSAutoBaseLunaServiceAPI.qml
