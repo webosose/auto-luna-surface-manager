@@ -27,6 +27,7 @@ public:
 
     QAtomicInt ref;
     int id;
+    QPointF pos;
     QPointF normalizedPos;
     DebugTouchPoint::TouchPointState state;
 };
@@ -55,9 +56,24 @@ DebugTouchPoint::~DebugTouchPoint()
         delete d;
 }
 
+int DebugTouchPoint::touchId() const
+{
+    return d->id;
+}
+
+QPointF DebugTouchPoint::pos() const
+{
+    return d->pos;
+}
+
 QPointF DebugTouchPoint::normalizedPos() const
 {
     return d->normalizedPos;
+}
+
+void DebugTouchPoint::setPos(const QPointF &pos)
+{
+    d->pos = pos;
 }
 
 void DebugTouchPoint::setNormalizedPos(const QPointF &normalizedPos)

@@ -24,7 +24,7 @@ Item {
     property int clickCount: 0
     property int hitCount: 5
     property real hitRatio: 0.3
-    property string optionName: "surfaceHighlight"
+    property var optionNames: ["surfaceHighlight", "touchHighlight"]
 
     Timer {
         id: clickCountTimer
@@ -67,10 +67,12 @@ Item {
                 clickCountTimer.stop();
                 clickCount = 0;
 
-                console.info("DebugTouchPoint: pattern recognized, toggling option", optionName);
-                var value = !Settings.local.debug[optionName];
+                console.info("DebugTouchPoint: pattern recognized, toggling options", root.optionNames);
+                var value = !Settings.local.debug.enable;
                 var obj = {debug: {enable: value}};
-                obj.debug[optionName] = value;
+                for (var i = 0; i < root.optionNames.length; i++) {
+                    obj.debug[root.optionNames[i]] = value;
+                }
                 Settings.updateLocalSettings(obj);
             }
         }

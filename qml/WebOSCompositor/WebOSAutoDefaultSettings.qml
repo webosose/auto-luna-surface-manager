@@ -28,6 +28,7 @@ QtObject {
             "enable": false,
             "focusHighlight": false,
             "surfaceHighlight": false,
+            "touchHighlight": false,
             "fpsGraphOverlay": false,
             "spinnerRepaint": false,
             "touchOverlay": false,

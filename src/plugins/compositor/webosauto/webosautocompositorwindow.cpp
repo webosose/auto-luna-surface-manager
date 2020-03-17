@@ -18,21 +18,57 @@
 
 #include "webosautocompositorwindow.h"
 #include "debugtypes.h"
+#include "webossurfaceitem.h"
+#include <QtQuick/private/qquickitem_p.h>
 
 WebOSAutoCompositorWindow::WebOSAutoCompositorWindow(QString screenName, QString geometryString, QSurfaceFormat *surfaceFormat)
     : WebOSCompositorWindow(screenName, geometryString, surfaceFormat)
 {
 }
 
+static WebOSSurfaceItem* findWebOSSurfaceItem(QQuickItem *base, qreal x, qreal y)
+{
+    if (!base)
+        return nullptr;
+
+    if (!base->isVisible() || !base->isEnabled() || QQuickItemPrivate::get(base)->culled)
+        return nullptr;
+
+    QList<QQuickItem*> children = QQuickItemPrivate::get(base)->paintOrderChildItems();
+    for (int ii = children.count() - 1; ii >= 0; --ii) {
+        QQuickItem *child = children.at(ii);
+        WebOSSurfaceItem *webosSurfaceItem = findWebOSSurfaceItem(child, x, y);
+        if (webosSurfaceItem)
+            return webosSurfaceItem;
+    }
+
+    WebOSSurfaceItem *webosSurfaceItem = qobject_cast<WebOSSurfaceItem*>(base);
+    if (webosSurfaceItem) {
+        QPointF point = webosSurfaceItem->mapFromScene(QPointF(x, y));
+        if (webosSurfaceItem->isVisible() && base->contains(point))
+            return webosSurfaceItem;
+    }
+
+    return nullptr;
+}
+
+WebOSSurfaceItem* WebOSAutoCompositorWindow::itemAt(qreal x, qreal y)
+{
+    return findWebOSSurfaceItem(contentItem(), x, y);
+}
+
 bool WebOSAutoCompositorWindow::event(QEvent *e)
 {
     switch(e->type()) {
+    case QEvent::TouchBegin:
+    case QEvent::TouchEnd:
     case QEvent::TouchUpdate: {
         QTouchEvent *touchEvent = static_cast<QTouchEvent*>(e);
         DebugTouchEvent debugTouchEvent;
 
         foreach (const QTouchEvent::TouchPoint &touchPoint, touchEvent->touchPoints()) {
             DebugTouchPoint *point = new DebugTouchPoint(touchPoint.id());
+            point->setPos(touchPoint.pos());
             point->setNormalizedPos(touchPoint.normalizedPos());
             point->setState(touchPoint.state());
             debugTouchEvent.appendDebugTouchPoint(point);

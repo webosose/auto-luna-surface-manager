@@ -21,7 +21,7 @@ CONFIG += plugin
 
 TARGET = webosautocompositorplugin
 
-QT += weboscompositor gui-private
+QT += weboscompositor gui-private quick-private
 
 SOURCES = webosautocompositorplugin.cpp \
           webosautocompositor.cpp \

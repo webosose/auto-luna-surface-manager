@@ -128,4 +128,9 @@ FocusScope {
         vertical: true
         reverse: true
     }
+
+    Loader {
+        anchors.fill: parent
+        source: Settings.local.debug.enable ? "debug/WebOSAutoDebugOverlay.qml" : ""
+    }
 }

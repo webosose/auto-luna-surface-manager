@@ -27,6 +27,8 @@ class DebugTouchPointPrivate;
 class DebugTouchPoint : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int touchId READ touchId)
+    Q_PROPERTY(QPointF pos READ pos)
     Q_PROPERTY(QPointF normalizedPos READ normalizedPos)
     Q_PROPERTY(TouchPointState state READ state)
 
@@ -57,11 +59,13 @@ public:
     void swap(DebugTouchPoint &other) Q_DECL_NOEXCEPT
     { qSwap(d, other.d); }
 
-    int id() const;
+    int touchId() const;
+    QPointF pos() const;
     QPointF normalizedPos() const;
     TouchPointState state() const;
 
     // internal
+    void setPos(const QPointF &normalizedPos);
     void setNormalizedPos(const QPointF &normalizedPos);
     void setState(Qt::TouchPointState state);
 
