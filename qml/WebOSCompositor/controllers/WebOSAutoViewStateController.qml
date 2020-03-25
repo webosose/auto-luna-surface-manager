@@ -35,7 +35,7 @@ Item {
             if (views.volume)
                 views.volume.hide();
             if (views.notification)
-                views.notification.hide();
+                views.notification.closeView();
             if (views.popup)
                 views.popup.closeView();
             if (views.home)
@@ -53,7 +53,7 @@ Item {
             if (views.volume)
                 views.volume.hide();
             if (views.notification)
-                views.notification.hide();
+                views.notification.closeView();
             if (views.popup)
                 views.popup.closeView();
             if (views.home)
@@ -69,7 +69,7 @@ Item {
             if (views.volume)
                 views.volume.hide();
             if (views.notification)
-                views.notification.hide();
+                views.notification.closeView();
             if (views.popup)
                 views.popup.closeView();
             if (views.overlay)
@@ -85,7 +85,7 @@ Item {
             if (views.volume)
                 views.volume.hide();
             if (views.notification)
-                views.notification.hide();
+                views.notification.closeView();
         }
     }
 
