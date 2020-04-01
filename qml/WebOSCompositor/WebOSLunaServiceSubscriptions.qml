@@ -23,8 +23,15 @@ QtObject {
             method: "getSessionList",
             handler: function (response) {
                 if (response.sessionList !== undefined) {
-                    return response.sessionList;
+                    var sessionList = response.sessionList;
+                    if (sessionList && sessionList.length > 0) {
+                        for (var i = 0; i < sessionList.length; i++) {
+                            if (sessionList[i].deviceSetInfo.displayId == compositorWindow.displayId)
+                                return sessionList[i].sessionId;
+                        }
+                    }
                 }
+                return undefined;
             }
         }
     ]

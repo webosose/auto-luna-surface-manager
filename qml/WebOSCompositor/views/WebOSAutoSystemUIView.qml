@@ -27,7 +27,7 @@ SystemUIView {
     function show() {
         var params = {};
         params["displayAffinity"] = compositorWindow.displayId;
-        var sessionId = SessionManager.getSessionByDisplay(compositorWindow.displayId);
+        var sessionId = SessionManager.sessionId;
         if (!sessionId)
             console.warn("WebOSAutoSystemUIView: sessionId is not valid");
         console.info("WebOSAutoSystemUIView: launching the target app:", root.appId + ' (with sessionId: ' + sessionId + ')');

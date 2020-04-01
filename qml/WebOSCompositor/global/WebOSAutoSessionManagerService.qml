@@ -23,21 +23,7 @@ QtObject {
     id: root
     objectName: "SessionManager"
 
-    property var sessionList: Settings.subscribe("com.webos.service.sessionmanager", "getSessionList", {}) || []
-
-    function getSessionByDisplay(id) {
-        console.log("getSessionByDisplay: ", id, JSON.stringify(root.sessionList));
-        var sessionId = undefined;
-        if (root.sessionList && root.sessionList.length > 0) {
-            for (var i = 0; i < root.sessionList.length; i++) {
-                if (root.sessionList[i].deviceSetInfo.displayId == id) {
-                    sessionId = root.sessionList[i].sessionId;
-                    break;
-                }
-            }
-        }
-        return sessionId;
-    }
+    property string sessionId: Settings.subscribe("com.webos.service.sessionmanager", "getSessionList", {}) || ""
 
     function init() {
         // This function does nothing but is here for avoid lazy loading of sessionList
