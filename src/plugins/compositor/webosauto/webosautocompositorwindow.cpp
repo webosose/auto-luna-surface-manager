@@ -26,7 +26,7 @@ WebOSAutoCompositorWindow::WebOSAutoCompositorWindow(QString screenName, QString
 {
 }
 
-static WebOSSurfaceItem* findWebOSSurfaceItem(QQuickItem *base, qreal x, qreal y)
+static WebOSSurfaceItem* findWebOSSurfaceItem(QQuickItem *base, const QPointF& point)
 {
     if (!base)
         return nullptr;
@@ -37,24 +37,23 @@ static WebOSSurfaceItem* findWebOSSurfaceItem(QQuickItem *base, qreal x, qreal y
     QList<QQuickItem*> children = QQuickItemPrivate::get(base)->paintOrderChildItems();
     for (int ii = children.count() - 1; ii >= 0; --ii) {
         QQuickItem *child = children.at(ii);
-        WebOSSurfaceItem *webosSurfaceItem = findWebOSSurfaceItem(child, x, y);
+        WebOSSurfaceItem *webosSurfaceItem = findWebOSSurfaceItem(child, point);
         if (webosSurfaceItem)
             return webosSurfaceItem;
     }
 
     WebOSSurfaceItem *webosSurfaceItem = qobject_cast<WebOSSurfaceItem*>(base);
     if (webosSurfaceItem) {
-        QPointF point = webosSurfaceItem->mapFromScene(QPointF(x, y));
-        if (webosSurfaceItem->isVisible() && base->contains(point))
+        if (webosSurfaceItem->isVisible() && webosSurfaceItem->QQuickItem::contains(webosSurfaceItem->mapFromScene(point)))
             return webosSurfaceItem;
     }
 
     return nullptr;
 }
 
-WebOSSurfaceItem* WebOSAutoCompositorWindow::itemAt(qreal x, qreal y)
+WebOSSurfaceItem* WebOSAutoCompositorWindow::itemAt(const QPointF& point)
 {
-    return findWebOSSurfaceItem(contentItem(), x, y);
+    return findWebOSSurfaceItem(contentItem(), point);
 }
 
 bool WebOSAutoCompositorWindow::event(QEvent *e)

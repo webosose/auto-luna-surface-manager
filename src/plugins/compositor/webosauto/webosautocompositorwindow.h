@@ -30,7 +30,7 @@ class WebOSAutoCompositorWindow : public WebOSCompositorWindow
 public:
     explicit WebOSAutoCompositorWindow(QString screenName = QString(), QString geometryString = QString(), QSurfaceFormat *surfaceFormat = 0);
 
-    Q_INVOKABLE WebOSSurfaceItem* itemAt(qreal x, qreal y);
+    Q_INVOKABLE WebOSSurfaceItem* itemAt(const QPointF& point);
 
 signals:
     void debugTouchUpdated(DebugTouchEvent* evt);

@@ -104,11 +104,13 @@ Item {
                     pointItem.x = pos.x - pointSize / 2;
                     pointItem.y = pos.y - pointSize / 2;
 
-                    var item = compositorWindow.itemAt(pos.x, pos.y);
+                    var item = compositorWindow.itemAt(touchPoint.pos);
+                    var text = texts.itemAt(i);
                     if (item) {
-                        var text = texts.itemAt(i);
-                        text.visible = true;
                         text.text = "TouchPoint " + +(i+1) + ": " + item.objectName;
+                        text.visible = true;
+                    } else {
+                        text.visible = false;
                     }
                 }
                 for (var i = sortedIds.length; i < points.model.length && i < colors.length; i++) {
