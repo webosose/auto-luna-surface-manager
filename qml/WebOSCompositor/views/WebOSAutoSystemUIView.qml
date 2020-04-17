@@ -27,12 +27,17 @@ SystemUIView {
     function show() {
         var params = {};
         params["displayAffinity"] = compositorWindow.displayId;
+        /* FIXME
         var sessionId = SessionManager.getSessionByDisplay(compositorWindow.displayId);
         if (!sessionId)
             console.warn("WebOSAutoSystemUIView: sessionId is not valid");
         console.info("WebOSAutoSystemUIView: launching the target app:", root.appId + ' (with sessionId: ' + sessionId + ')');
         LS.adhoc.call("luna://com.webos.applicationManager", "/launch",
             "{\"id\":\"" + root.appId + "\", \"params\":" + JSON.stringify(params) + "}", undefined, sessionId);
+        */
+        console.info("WebOSAutoSystemUIView: launching the target app:", root.appId);
+        LS.adhoc.call("luna://com.webos.applicationManager", "/launch",
+            "{\"id\":\"" + root.appId + "\", \"params\":" + JSON.stringify(params) + "}");
     }
 
     function hide() {
