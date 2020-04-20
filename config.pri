@@ -1,4 +1,4 @@
-# Copyright (c) 2019 LG Electronics, Inc.
+# Copyright (c) 2019-2020 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@ defineReplace(replace_envs) {
     # Add variables to replace
     variables = WEBOS_INSTALL_DATADIR \
                 WEBOS_INSTALL_BINS \
-                WEBOS_INSTALL_SYSCONFDIR
+                WEBOS_INSTALL_SYSCONFDIR \
+                WEBOS_INSTALL_QML
 
     command = "sed"
     for(var, variables) {

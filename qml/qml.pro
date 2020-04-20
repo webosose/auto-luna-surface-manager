@@ -1,4 +1,4 @@
-# Copyright (c) 2019 LG Electronics, Inc.
+# Copyright (c) 2019-2020 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,21 @@
 
 TEMPLATE = aux
 
-qmlfiles.files = WebOSCompositor
-qmlfiles.path = $$WEBOS_INSTALL_QML
+use_qresources {
+    maindir = $$PWD/WebOSCompositor
+    mainqrc = $$maindir/WebOSCompositor.qrc
+    system(./makeqrc.sh -prefix WebOSCompositor $$maindir $$mainqrc)
 
-INSTALLS += qmlfiles
+    mainrcc = $$PWD/WebOSCompositor.rcc
+    system(rcc -binary $$mainqrc -o $$mainrcc)
+    system(rm -f $$mainqrc)
+    QMAKE_CLEAN += $$mainrcc
+
+    rcc.files = $$mainrcc
+    rcc.path = $$WEBOS_INSTALL_QML/WebOSCompositor
+    INSTALLS += rcc
+} else {
+    qmlfiles.files = WebOSCompositor
+    qmlfiles.path = $$WEBOS_INSTALL_QML/WebOSCompositor/AutoRSE
+    INSTALLS += qmlfiles
+}
