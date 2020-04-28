@@ -24,7 +24,7 @@ Item {
     property int clickCount: 0
     property int hitCount: 5
     property real hitRatio: 0.3
-    property var optionNames: ["surfaceHighlight", "touchHighlight"]
+    property var optionNames: ["compositorBorder", "surfaceHighlight", "touchHighlight"]
 
     Timer {
         id: clickCountTimer

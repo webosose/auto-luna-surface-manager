@@ -26,6 +26,7 @@ QtObject {
         },
         "debug": {
             "enable": false,
+            "compositorBorder": false,
             "focusHighlight": false,
             "surfaceHighlight": false,
             "touchHighlight": false,
