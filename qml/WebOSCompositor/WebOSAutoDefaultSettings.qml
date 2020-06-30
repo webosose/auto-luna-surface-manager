@@ -1,4 +1,4 @@
-// Copyright (c) 2019 LG Electronics, Inc.
+// Copyright (c) 2019-2020 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,6 +21,11 @@ QtObject {
     readonly property url imagePath: "resources/images/"
     readonly property url imagePathBase: "file://" + WebOS.qmlDir + "/WebOSCompositorBase/resources/images/"
     readonly property var settings: {
+        "addon": {
+            "directories": [
+                "file://" + WebOS.applicationDir + "/"
+            ]
+        },
         "compositor": {
             "geometryPendingInterval": 2000
         },
