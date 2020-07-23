@@ -61,51 +61,47 @@ BaseLunaServiceAPI {
         var sourceWindow = compositor.windows[from];
         var targetWindow = compositor.windows[to];
 
-        if (sourceWindow.mirroringState == CompositorWindow.MirroringStateDisabled || targetWindow.mirroringState == CompositorWindow.MirroringStateDisabled) {
+        if (sourceWindow.appMirroringState == CompositorWindow.AppMirroringStateDisabled || targetWindow.appMirroringState == CompositorWindow.AppMirroringStateDisabled) {
             ret.errorCode = 7;
             ret.errorText = "ERR_MIRRORING_DISABLED";
             console.warn("errorCode: " + ret.errorCode + ", errorText: " + ret.errorText);
             return JSON.stringify(ret);
         }
 
-        // Stop mirroring
+        // Stop App mirroring
         if (!mirror) {
-            if (sourceWindow.mirroringState != CompositorWindow.MirroringStateSender || targetWindow.mirroringState != CompositorWindow.MirroringStateReceiver) {
+            if (sourceWindow.appMirroringState != CompositorWindow.AppMirroringStateSender || targetWindow.appMirroringState != CompositorWindow.AppMirroringStateReceiver) {
                 ret.errorCode = 4;
                 ret.errorText = "ERR_NO_MIRRORING";
                 console.warn("errorCode: " + ret.errorCode + ", errorText: " + ret.errorText);
                 return JSON.stringify(ret);
             }
 
-            if (sourceWindow.stopMirroring(to) != 0) {
+            if (sourceWindow.stopAppMirroring(to) != 0) {
                 ret.errorCode = 10;
                 ret.errorText = "INTERNAL_ERROR";
                 console.warn("errorText: " + ret.errorText);
             }
+
+            sourceWindow.appMirroringItem = null;
+            targetWindow.appMirroringItem = null;
+
             return JSON.stringify(ret);
         }
 
-        // Start mirroring
-
-        if (sourceWindow.mirroringState == CompositorWindow.MirroringStateReceiver ||
-               targetWindow.mirroringState == CompositorWindow.MirroringStateSender ||
-               targetWindow.mirroringState == CompositorWindow.MirroringStateReceiver) {
+        // Start App mirroring
+        if (sourceWindow.appMirroringState == CompositorWindow.AppMirroringStateReceiver ||
+               targetWindow.appMirroringState == CompositorWindow.AppMirroringStateSender ||
+               targetWindow.appMirroringState == CompositorWindow.AppMirroringStateReceiver) {
             ret.errorCode = 5;
             ret.errorText = "ERR_ALREADY_MIRRORING";
             console.warn("errorCode: " + ret.errorCode + ", errorText: " + ret.errorText);
             return JSON.stringify(ret);
         }
 
-        if (!sourceWindow.fullscreenItem) {
-            ret.errorCode = 2;
-            ret.errorText = "ERR_NO_APP";
-            console.warn("errorCode: " + ret.errorCode + ", errorText: " + ret.errorText);
-            return JSON.stringify(ret);
-        }
-
         // Error if there is another sender
         for (var i = 0; i < compositor.windows.length; i++) {
-            if (from != i && compositor.windows[i].mirroringState == CompositorWindow.MirroringStateSender) {
+            if (from != i && compositor.windows[i].appMirroringState == CompositorWindow.AppMirroringStateSender) {
                 ret.errorCode = 5;
                 ret.errorText = "ERR_ALREADY_MIRRORING";
                 console.warn("errorCode: " + ret.errorCode + ", errorText: " + ret.errorText);
@@ -113,11 +109,24 @@ BaseLunaServiceAPI {
             }
         }
 
+        // Set App mirroring item (source)
+        if (!sourceWindow.viewsRoot.fullscreen.currentItem) {
+            ret.errorCode = 2;
+            ret.errorText = "ERR_NO_APP";
+            console.warn("errorCode: " + ret.errorCode + ", errorText: " + ret.errorText);
+            return JSON.stringify(ret);
+        }
+        sourceWindow.appMirroringItem = Qt.binding(function () { return sourceWindow.viewsRoot.fullscreen.currentItem; });
+
         // Now the source is inactive or sender
-        if (sourceWindow.startMirroring(to) != 0) {
+        if (sourceWindow.startAppMirroring(to) != 0) {
             ret.errorCode = 10;
             ret.errorText = "INTERNAL_ERROR";
             console.warn("errorText: " + ret.errorText);
+            sourceWindow.appMirroringItem = null;
+        } else {
+            // Set App mirroring item (target)
+            targetWindow.appMirroringItem = Qt.binding(function () { return targetWindow.viewsRoot.fullscreen.currentItem; });
         }
 
         return JSON.stringify(ret);
@@ -131,7 +140,7 @@ BaseLunaServiceAPI {
         function __subscribe() {
             if (root.subscribersCount("getAppMirroring") == 0) {
                 for (var i = 0; i < compositor.windows.length; i++)
-                    compositor.windows[i].mirroringStateChanged.connect(__replySubscription);
+                    compositor.windows[i].appMirroringStateChanged.connect(__replySubscription);
                 root.subscriptionAboutToCancel.connect(__unsubscribe);
             }
         }
@@ -141,7 +150,7 @@ BaseLunaServiceAPI {
             // So it is the last subscription being cancelled if the count is 1.
             if (method == "getAppMirroring" && root.subscribersCount("getAppMirroring") == 1) {
                 for (var i = 0; i < compositor.windows.length; i++)
-                    compositor.windows[i].mirroringStateChanged.disconnect(__replySubscription);
+                    compositor.windows[i].appMirroringStateChanged.disconnect(__replySubscription);
                 root.subscriptionAboutToCancel.disconnect(__unsubscribe);
             }
         }
@@ -160,7 +169,7 @@ BaseLunaServiceAPI {
         ret.mirroringInfo = [];
 
         for (var i = 0; i < compositor.windows.length; i++)
-            ret.mirroringInfo[i] = JSON.parse('{"displayId":' + i + ',"mirroringStatus":' + JSON.stringify(mirroringStatus[compositor.windows[i].mirroringState-1]) + '}');
+            ret.mirroringInfo[i] = JSON.parse('{"displayId":' + i + ',"mirroringStatus":' + JSON.stringify(mirroringStatus[compositor.windows[i].appMirroringState-1]) + '}');
 
         return JSON.stringify(ret);
     }
