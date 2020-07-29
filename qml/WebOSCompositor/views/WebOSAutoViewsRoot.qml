@@ -30,7 +30,7 @@ FocusScope {
     property alias voiceAssistant: voiceAssistantViewId
     property alias notification: notificationViewId
     property alias volume: volumeViewId
-    property alias homeHotspotTop: homeHotspotTopId
+    property alias volumeHotspotTop: volumeHotspotTopId
     property alias homeHotspotBottom: homeHotspotBottomId
 
     FullscreenView {
@@ -109,12 +109,12 @@ FocusScope {
     }
 
     TouchHotspot {
-        id: homeHotspotTopId
+        id: volumeHotspotTopId
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
-        height: Settings.local.homeView.hotspotThickness
-        threshold: Settings.local.homeView.hotspotThreshold
+        height: Settings.local.volumeView.hotspotThickness
+        threshold: Settings.local.volumeView.hotspotThreshold
         vertical: true
     }
 
