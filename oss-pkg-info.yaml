@@ -1,5 +1,4 @@
 Open Source Software Package:
 - name: webOSOSE-auto-luna-surface-manager
-  version: 0.0.1
   source: https://github.com/webosose/auto-luna-surface-manager
   license: Apache-2.0
