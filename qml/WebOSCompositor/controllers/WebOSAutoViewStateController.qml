@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 LG Electronics, Inc.
+// Copyright (c) 2019-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ Item {
 
     Connections {
         target: views.fullscreen
-        onSurfaceAdded: {
+        function onSurfaceAdded(item) {
             if (views.keyboard)
                 views.keyboard.closeView();
             if (views.volume)
@@ -47,7 +47,7 @@ Item {
 
     Connections {
         target: views.overlay
-        onSurfaceAdded: {
+        function onSurfaceAdded(item) {
             if (views.keyboard)
                 views.keyboard.closeView();
             if (views.volume)
@@ -63,7 +63,7 @@ Item {
 
     Connections {
         target: views.home
-        onOpening: {
+        function onOpening() {
             if (views.keyboard)
                 views.keyboard.closeView();
             if (views.volume)
@@ -79,7 +79,7 @@ Item {
 
     Connections {
         target: views.popup
-        onSurfaceAdded: {
+        function onSurfaceAdded(item) {
             if (views.keyboard)
                 views.keyboard.closeView();
             if (views.volume)
@@ -91,7 +91,7 @@ Item {
 
     Connections {
         target: views.homeHotspotBottom
-        onTriggered: {
+        function onTriggered() {
             if (views.home)
                 views.home.show();
         }
@@ -99,7 +99,7 @@ Item {
 
     Connections {
         target: views.volumeHotspotTop
-        onTriggered: {
+        function onTriggered() {
             if (views.volume)
                 views.volume.show();
         }
