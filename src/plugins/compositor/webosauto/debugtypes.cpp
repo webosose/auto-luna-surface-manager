@@ -1,4 +1,4 @@
-// Copyright (c) 2020 LG Electronics, Inc.
+// Copyright (c) 2020-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -85,6 +85,28 @@ DebugTouchPoint::TouchPointState DebugTouchPoint::state() const {
     return d->state;
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+void DebugTouchPoint::setState(QEventPoint::State state)
+{
+    switch (state) {
+    case QEventPoint::Pressed:
+        d->state = TouchPointPressed;
+        break;
+
+    case QEventPoint::Updated:
+        d->state = TouchPointMoved;
+        break;
+
+    case QEventPoint::Stationary:
+        d->state = TouchPointStationary;
+        break;
+
+    case QEventPoint::Released:
+        d->state = TouchPointReleased;
+        break;
+    }
+}
+#else
 void DebugTouchPoint::setState(Qt::TouchPointState state)
 {
     switch (state) {
@@ -105,6 +127,7 @@ void DebugTouchPoint::setState(Qt::TouchPointState state)
         break;
     }
 }
+#endif
 
 DebugTouchEvent::DebugTouchEvent(QObject *parent)
     : QObject(parent)
@@ -123,7 +146,11 @@ DebugTouchEvent::~DebugTouchEvent()
 
 QQmlListProperty<DebugTouchPoint> DebugTouchEvent::touchPoints()
 {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    return QQmlListProperty<DebugTouchPoint>(this, &m_touchPoints);
+#else
     return QQmlListProperty<DebugTouchPoint>(this, m_touchPoints);
+#endif
 }
 
 void DebugTouchEvent::appendDebugTouchPoint(DebugTouchPoint *point)

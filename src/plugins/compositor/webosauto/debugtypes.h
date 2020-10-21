@@ -1,4 +1,4 @@
-// Copyright (c) 2020 LG Electronics, Inc.
+// Copyright (c) 2020-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@
 #include <QObject>
 #include <QPoint>
 #include <qqmllist.h>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QEventPoint>
+#endif
 
 class DebugTouchPointPrivate;
 
@@ -67,7 +70,11 @@ public:
     // internal
     void setPos(const QPointF &normalizedPos);
     void setNormalizedPos(const QPointF &normalizedPos);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    void setState(QEventPoint::State state);
+#else
     void setState(Qt::TouchPointState state);
+#endif
 
 private:
     DebugTouchPointPrivate *d;

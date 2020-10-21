@@ -1,6 +1,6 @@
 /* @@@LICENSE
  *
- * Copyright (c) 2020 LG Electronics, Inc.
+ * Copyright (c) 2020-2021 LG Electronics, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,6 +65,15 @@ bool WebOSAutoCompositorWindow::event(QEvent *e)
         QTouchEvent *touchEvent = static_cast<QTouchEvent*>(e);
         DebugTouchEvent debugTouchEvent;
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        foreach (const QTouchEvent::TouchPoint &touchPoint, touchEvent->points()) {
+            DebugTouchPoint *point = new DebugTouchPoint(touchPoint.id());
+            point->setPos(touchPoint.position());
+            point->setNormalizedPos(touchPoint.normalizedPosition());
+            point->setState(touchPoint.state());
+            debugTouchEvent.appendDebugTouchPoint(point);
+        }
+#else
         foreach (const QTouchEvent::TouchPoint &touchPoint, touchEvent->touchPoints()) {
             DebugTouchPoint *point = new DebugTouchPoint(touchPoint.id());
             point->setPos(touchPoint.pos());
@@ -72,6 +81,7 @@ bool WebOSAutoCompositorWindow::event(QEvent *e)
             point->setState(touchPoint.state());
             debugTouchEvent.appendDebugTouchPoint(point);
         }
+#endif
         emit debugTouchUpdated(&debugTouchEvent);
         break;
     }
