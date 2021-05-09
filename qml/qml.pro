@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2020 LG Electronics, Inc.
+# Copyright (c) 2019-2021 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,10 +19,10 @@ TEMPLATE = aux
 use_qresources {
     maindir = $$PWD/WebOSCompositor
     mainqrc = $$maindir/WebOSCompositor.qrc
-    system(./makeqrc.sh -prefix WebOSCompositor $$maindir $$mainqrc)
+    !system(./makeqrc.sh -prefix WebOSCompositor $$maindir $$mainqrc): error("Error on running makeqrc.sh")
 
     mainrcc = $$PWD/WebOSCompositor.rcc
-    system(rcc -binary $$mainqrc -o $$mainrcc)
+    !system(rcc -binary $$mainqrc -o $$mainrcc): error("Error on running rcc")
     system(rm -f $$mainqrc)
     QMAKE_CLEAN += $$mainrcc
 
