@@ -1,6 +1,6 @@
 /* @@@LICENSE
  *
- * Copyright (c) 2020 LG Electronics, Inc.
+ * Copyright (c) 2020-2021 LG Electronics, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,8 @@ public:
     explicit WebOSAutoCompositorWindow(QString screenName = QString(), QString geometryString = QString(), QSurfaceFormat *surfaceFormat = 0);
 
     Q_INVOKABLE WebOSSurfaceItem* itemAt(const QPointF& point);
+
+    void invalidateCursor() override;
 
 signals:
     void debugTouchUpdated(DebugTouchEvent* evt);

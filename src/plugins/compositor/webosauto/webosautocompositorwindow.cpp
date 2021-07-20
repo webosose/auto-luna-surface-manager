@@ -16,10 +16,11 @@
  *
  * LICENSE@@@ */
 
+#include <QtQuick/private/qquickitem_p.h>
+#include "webossurfaceitem.h"
+#include "webosautocompositor.h"
 #include "webosautocompositorwindow.h"
 #include "debugtypes.h"
-#include "webossurfaceitem.h"
-#include <QtQuick/private/qquickitem_p.h>
 
 WebOSAutoCompositorWindow::WebOSAutoCompositorWindow(QString screenName, QString geometryString, QSurfaceFormat *surfaceFormat)
     : WebOSCompositorWindow(screenName, geometryString, surfaceFormat)
@@ -56,6 +57,15 @@ WebOSSurfaceItem* WebOSAutoCompositorWindow::itemAt(const QPointF& point)
     return findWebOSSurfaceItem(contentItem(), point);
 }
 
+void WebOSAutoCompositorWindow::invalidateCursor()
+{
+    // As this can be called as a result of cursorVisible change
+    // we should call applyCursorVisibility directly here.
+    WebOSAutoCompositor *c = static_cast<WebOSAutoCompositor *>(compositor());
+    if (c && c->useCursorTimeout())
+        c->applyCursorVisibility(false);
+}
+
 bool WebOSAutoCompositorWindow::event(QEvent *e)
 {
     switch(e->type()) {
@@ -87,6 +97,34 @@ bool WebOSAutoCompositorWindow::event(QEvent *e)
     }
     default:
         break;
+    }
+
+    // NOTE: This cursor visiblity control refers to what libim has.
+    WebOSAutoCompositor *c = static_cast<WebOSAutoCompositor *>(compositor());
+    if (c && c->useCursorTimeout()) {
+        switch (e->type()) {
+        case QEvent::KeyPress:
+            switch ((static_cast<QKeyEvent *>(e))->key()) {
+            case Qt::Key_Left:
+            case Qt::Key_Up:
+            case Qt::Key_Right:
+            case Qt::Key_Down:
+                c->hintCursorVisibility(false);
+                break;
+            default:
+                break;
+            }
+            break;
+
+        case QEvent::MouseButtonPress:
+        case QEvent::MouseButtonRelease:
+        case QEvent::MouseMove:
+        case QEvent::Wheel:
+            c->hintCursorVisibility(true);
+            break;
+        default:
+            break;
+        }
     }
 
     return WebOSCompositorWindow::event(e);

@@ -1,6 +1,6 @@
 /* @@@LICENSE
  *
- * Copyright (c) 2020 LG Electronics, Inc.
+ * Copyright (c) 2020-2021 LG Electronics, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,13 +19,24 @@
 #ifndef WEBOSAUTOCOMPOSITOR_H
 #define WEBOSAUTOCOMPOSITOR_H
 
+#include <QTimer>
+
 #include <WebOSCoreCompositor/weboscorecompositor.h>
 
 class WebOSAutoCompositor : public WebOSCoreCompositor {
     Q_OBJECT
 
 public:
+    WebOSAutoCompositor();
+
     void registerTypes() override;
+    bool useCursorTimeout() const { return (m_cursorTimer != nullptr); }
+    void hintCursorVisibility(bool visible);
+    void applyCursorVisibility(bool visible);
+
+private:
+    bool m_cursorOverride = false;
+    QTimer *m_cursorTimer = nullptr;
 };
 
 #endif // WEBOSAUTOCOMPOSITOR_H

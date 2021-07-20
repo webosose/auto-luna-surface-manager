@@ -1,6 +1,6 @@
 /* @@@LICENSE
  *
- * Copyright (c) 2020 LG Electronics, Inc.
+ * Copyright (c) 2020-2021 LG Electronics, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,28 @@
  *
  * LICENSE@@@ */
 
+#include <QGuiApplication>
+#include "weboscompositorconfig.h"
 #include "webosautocompositor.h"
 
 #include "debugtypes.h"
+
+WebOSAutoCompositor::WebOSAutoCompositor()
+    : WebOSCoreCompositor()
+{
+    int cursorTimeout = WebOSCompositorConfig::instance()->cursorTimeout();
+    if (cursorTimeout > 0) {
+        // Set up the cursor timer if the timeout value is given
+        m_cursorTimer = new QTimer(this);
+        m_cursorTimer->setInterval(cursorTimeout);
+        connect(m_cursorTimer, &QTimer::timeout, this, [this] {this->hintCursorVisibility(false);});
+        qDebug("Cursor timeout is set as %d", cursorTimeout);
+        m_cursorTimer->start();
+    } else if (cursorTimeout == 0) {
+        // Show the cursor and no visibility control anymore
+        hintCursorVisibility(true);
+    }
+}
 
 void WebOSAutoCompositor::registerTypes()
 {
@@ -26,4 +45,33 @@ void WebOSAutoCompositor::registerTypes()
 
     qmlRegisterType<DebugTouchPoint>("WebOSCompositor", 1, 0, "DebugTouchPoint");
     qmlRegisterType<DebugTouchEvent>("WebOSCompositor", 1, 0, "DebugTouchEvent");
+}
+
+void WebOSAutoCompositor::hintCursorVisibility(bool visible)
+{
+    setCursorVisible(visible);
+    applyCursorVisibility(visible);
+    if (m_cursorTimer) {
+        if (visible)
+            m_cursorTimer->start();
+        else
+            m_cursorTimer->stop();
+    }
+}
+
+void WebOSAutoCompositor::applyCursorVisibility(bool visible)
+{
+    if (visible) {
+        if (m_cursorOverride) {
+            qDebug("Cursor turns to visible");
+            QGuiApplication::restoreOverrideCursor();
+            m_cursorOverride = false;
+        }
+    } else {
+        if (!m_cursorOverride) {
+            qDebug("Cursor turns to invisible");
+            QGuiApplication::setOverrideCursor(QCursor(Qt::BlankCursor));
+            m_cursorOverride = true;
+        }
+    }
 }
