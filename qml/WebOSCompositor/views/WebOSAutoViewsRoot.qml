@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 LG Electronics, Inc.
+// Copyright (c) 2019-2021 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ FocusScope {
         id: homeViewId
         objectName: "homeView" + compositorWindow.displayId
         layerNumber: 4
-        consumeKeyEvents: true // FIXME: needed to test the app
+        consumeKeyEvents: true
         appId: Settings.local.homeView.appId
         model: WebOSAutoSystemUIWindowModel {
             objectName: "homeWindowModel" + compositorWindow.displayId
@@ -79,6 +79,7 @@ FocusScope {
         id: voiceAssistantViewId
         objectName: "voiceAssistantView" + compositorWindow.displayId
         layerNumber: 10
+        consumeKeyEvents: true
         appId: Settings.local.voiceAssistantView.appId
         model: WebOSAutoSystemUIWindowModel {
             objectName: "voiceAssistantWindowModel" + compositorWindow.displayId
@@ -90,6 +91,7 @@ FocusScope {
         id: notificationViewId
         objectName: "notificationView" + compositorWindow.displayId
         layerNumber: 14
+        consumeKeyEvents: true
         appId: Settings.local.notificationView.appId
         model: WebOSAutoSystemUIWindowModel {
             objectName: "notificationWindowModel" + compositorWindow.displayId
@@ -101,6 +103,7 @@ FocusScope {
         id: volumeViewId
         objectName: "volumeView" + compositorWindow.displayId
         layerNumber: 15
+        consumeKeyEvents: true
         appId: Settings.local.volumeView.appId
         model: WebOSAutoSystemUIWindowModel {
             objectName: "volumeWindowModel" + compositorWindow.displayId
