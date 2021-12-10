@@ -89,7 +89,7 @@ void WebOSAutoCompositorWindow::invalidateCursor()
     // As this can be called as a result of cursorVisible change
     // we should call applyCursorVisibility directly here.
     WebOSAutoCompositor *c = static_cast<WebOSAutoCompositor *>(compositor());
-    if (c && c->useCursorTimeout())
+    if (c && (c->useCursorTimeout() || WebOSCompositorConfig::instance()->cursorTimeout() == -1))
         c->applyCursorVisibility(false);
 }
 
@@ -128,7 +128,7 @@ bool WebOSAutoCompositorWindow::event(QEvent *e)
 
     // NOTE: This cursor visiblity control refers to what libim has.
     WebOSAutoCompositor *c = static_cast<WebOSAutoCompositor *>(compositor());
-    if (c && c->useCursorTimeout()) {
+    if (c && (c->useCursorTimeout() || WebOSCompositorConfig::instance()->cursorTimeout() == -1)) {
         switch (e->type()) {
         case QEvent::KeyPress:
             switch ((static_cast<QKeyEvent *>(e))->key()) {
