@@ -20,8 +20,10 @@
 #define WEBOSAUTOCOMPOSITORWINDOW_H
 
 #include <WebOSCoreCompositor/weboscompositorwindow.h>
+#include "webosautocompositor.h"
 
 class DebugTouchEvent;
+class WebOSAutoCompositor;
 
 class WebOSAutoCompositorWindow : public WebOSCompositorWindow
 {
@@ -33,6 +35,8 @@ public:
     Q_INVOKABLE WebOSSurfaceItem* itemAt(const QPointF& point);
 
     void invalidateCursor() override;
+
+    WebOSAutoCompositor *compositor() const { return qobject_cast<WebOSAutoCompositor*>(WebOSCompositorWindow::compositor()); }
 
 signals:
     void debugTouchUpdated(DebugTouchEvent* evt);

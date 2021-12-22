@@ -22,6 +22,9 @@
 
 #include "debugtypes.h"
 
+#include <QtWaylandCompositor/qwaylandxdgshell.h>
+#include <QtWaylandCompositor/private/qwaylandpresentationtime_p.h>
+
 WebOSAutoCompositor::WebOSAutoCompositor()
     : WebOSCoreCompositor()
 {
@@ -37,6 +40,13 @@ WebOSAutoCompositor::WebOSAutoCompositor()
         // Show the cursor and no visibility control anymore
         hintCursorVisibility(true);
     }
+
+    m_presentation_time = new QWaylandPresentationTime(this);
+    if (m_presentation_time && m_presentation_time->isInitialized())
+        qInfo() << "PresentationTime is ready";
+
+    // To support some weston client using xdg-shell
+    new QWaylandXdgShell(this);
 }
 
 void WebOSAutoCompositor::registerTypes()

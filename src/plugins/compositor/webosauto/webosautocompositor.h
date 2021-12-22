@@ -23,6 +23,8 @@
 
 #include <WebOSCoreCompositor/weboscorecompositor.h>
 
+class QWaylandPresentationTime;
+
 class WebOSAutoCompositor : public WebOSCoreCompositor {
     Q_OBJECT
 
@@ -34,9 +36,13 @@ public:
     void hintCursorVisibility(bool visible);
     void applyCursorVisibility(bool visible);
 
+    QWaylandPresentationTime *presentationTime() const { return m_presentation_time; }
+
 private:
     bool m_cursorOverride = false;
     QTimer *m_cursorTimer = nullptr;
+
+    QWaylandPresentationTime *m_presentation_time = nullptr;
 };
 
 #endif // WEBOSAUTOCOMPOSITOR_H

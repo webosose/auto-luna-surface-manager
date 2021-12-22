@@ -22,9 +22,36 @@
 #include "webosautocompositorwindow.h"
 #include "debugtypes.h"
 
+#include <QGuiApplication>
+#include <qpa/qplatformscreen.h>
+#include <qpa/qplatformnativeinterface.h>
+#include <QtWaylandCompositor/private/qwaylandpresentationtime_p.h>
+
+static void pageFlipNotifier(void *key, unsigned int seq, unsigned int tv_sec, unsigned int tv_usec)
+{
+    WebOSAutoCompositorWindow* win =
+        static_cast<WebOSAutoCompositorWindow*>(static_cast<QPlatformScreen*>(key)->windows()[0]);
+
+    QWaylandPresentationTime *ptTime = win ? win->compositor()->presentationTime() : nullptr;
+    if (ptTime)
+        ptTime->sendFeedback(win, seq, tv_sec, tv_usec*1000);
+}
+
 WebOSAutoCompositorWindow::WebOSAutoCompositorWindow(QString screenName, QString geometryString, QSurfaceFormat *surfaceFormat)
     : WebOSCompositorWindow(screenName, geometryString, surfaceFormat)
 {
+    static bool hasPageFlipNotifier = [] {
+        typedef void(**pFn)(void *key, unsigned int seq, unsigned int tv_sec, unsigned int tv_usec);
+        void* addr = QGuiApplication::platformNativeInterface()->
+            nativeResourceForIntegration("dri_address_of_page_flip_notifier");
+        if (addr) {
+            std::atomic<pFn> pPageFlipNotifier((pFn)addr);
+            *pPageFlipNotifier = &::pageFlipNotifier;
+            qInfo() << "Set pageFlipNotifier as the page flip notifier";
+            return true;
+        }
+        return false;
+    }();
 }
 
 static WebOSSurfaceItem* findWebOSSurfaceItem(QQuickItem *base, const QPointF& point)
