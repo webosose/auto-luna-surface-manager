@@ -116,5 +116,29 @@ Item {
                     homeView.show();
             }
         }
+
+        function onSettingsPressed() {
+            var params = {};
+            var displayId = compositor.currentMouseDisplayId();
+            params["displayAffinity"] = displayId;
+            var sessionId = LS.sessionManager.sessionId;
+            if (!sessionId)
+                console.warn("sessionId is not valid");
+
+            var appId = "com.palm.app.settings";
+            var foregroundItems = Utils.foregroundList(compositor.windows[displayId].viewsRoot.children);
+            for (var i = 0; i < foregroundItems.length; i++) {
+                if (foregroundItems[i].appId == appId) {
+                    var overlayView = compositor.windows[displayId].viewsRoot.overlay;
+                    if (overlayView)
+                        overlayView.closeView();
+                    return;
+                }
+            }
+
+            console.info("launching the target app:", appId + ' (with sessionId: ' + sessionId + ')');
+            LS.adhoc.call("luna://com.webos.applicationManager", "/launch",
+                "{\"id\":\"" + appId + "\", \"params\":" + JSON.stringify(params) + "}", undefined, sessionId);
+        }
     }
 }

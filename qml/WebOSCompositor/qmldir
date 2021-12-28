@@ -7,3 +7,4 @@ BaseLunaServiceAPI 1.0 services/WebOSAutoBaseLunaServiceAPI.qml
 WebOSAutoSystemUIWindowModel 1.0 models/WebOSAutoSystemUIWindowModel.qml
 WebOSAutoSystemUIView 1.0 views/WebOSAutoSystemUIView.qml
 ViewsRoot 1.0 views/WebOSAutoViewsRoot.qml
+KeyController 1.0 controllers/WebOSAutoKeyFilter.qml
