@@ -1,6 +1,6 @@
 /* @@@LICENSE
  *
- * Copyright (c) 2020-2021 LG Electronics, Inc.
+ * Copyright (c) 2020-2022 LG Electronics, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@
  * LICENSE@@@ */
 
 #include <QGuiApplication>
+#include <QtGui/private/qguiapplication_p.h>
 #include "weboscompositorconfig.h"
+#include "weboscompositorwindow.h"
 #include "webosautocompositor.h"
 
 #include "debugtypes.h"
@@ -84,4 +86,13 @@ void WebOSAutoCompositor::applyCursorVisibility(bool visible)
             m_cursorOverride = true;
         }
     }
+}
+
+int WebOSAutoCompositor::currentMouseDisplayId()
+{
+    QWindow *currentMouseWindow = QGuiApplicationPrivate::currentMouseWindow;
+    if (currentMouseWindow)
+        return static_cast<WebOSCompositorWindow *>(currentMouseWindow)->displayId();
+
+    return 0;
 }

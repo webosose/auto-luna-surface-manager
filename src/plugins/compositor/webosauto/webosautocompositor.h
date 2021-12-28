@@ -1,6 +1,6 @@
 /* @@@LICENSE
  *
- * Copyright (c) 2020-2021 LG Electronics, Inc.
+ * Copyright (c) 2020-2022 LG Electronics, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ public:
     void applyCursorVisibility(bool visible);
 
     QWaylandPresentationTime *presentationTime() const { return m_presentation_time; }
+    Q_INVOKABLE int currentMouseDisplayId();
 
 private:
     bool m_cursorOverride = false;

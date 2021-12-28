@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2021 LG Electronics, Inc.
+// Copyright (c) 2019-2022 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -102,6 +102,19 @@ Item {
         function onTriggered() {
             if (views.volume)
                 views.volume.show();
+        }
+    }
+
+    Connections {
+        target: keyController
+        function onHomePressed() {
+            var homeView = compositor.windows[compositor.currentMouseDisplayId()].viewsRoot.home;
+            if (homeView) {
+                if (homeView.isOpen)
+                    homeView.hide();
+                else
+                    homeView.show();
+            }
         }
     }
 }
