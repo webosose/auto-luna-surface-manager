@@ -34,6 +34,7 @@ public:
 
     Q_INVOKABLE WebOSSurfaceItem* itemAt(const QPointF& point);
 
+    void setPageFlipNotifier() override;
     void invalidateCursor() override;
 
     WebOSAutoCompositor *compositor() const { return qobject_cast<WebOSAutoCompositor*>(WebOSCompositorWindow::compositor()); }

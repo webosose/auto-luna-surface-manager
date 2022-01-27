@@ -40,6 +40,10 @@ static void pageFlipNotifier(void *key, unsigned int seq, unsigned int tv_sec, u
 WebOSAutoCompositorWindow::WebOSAutoCompositorWindow(QString screenName, QString geometryString, QSurfaceFormat *surfaceFormat)
     : WebOSCompositorWindow(screenName, geometryString, surfaceFormat)
 {
+}
+
+void WebOSAutoCompositorWindow::setPageFlipNotifier()
+{
     static bool hasPageFlipNotifier = [] {
         typedef void(**pFn)(void *key, unsigned int seq, unsigned int tv_sec, unsigned int tv_usec);
         void* addr = QGuiApplication::platformNativeInterface()->
