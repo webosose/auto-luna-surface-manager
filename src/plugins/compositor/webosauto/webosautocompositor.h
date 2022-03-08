@@ -39,6 +39,8 @@ public:
     QWaylandPresentationTime *presentationTime() const { return m_presentation_time; }
     Q_INVOKABLE int currentMouseDisplayId();
 
+    void postInit() override;
+
 private:
     bool m_cursorOverride = false;
     QTimer *m_cursorTimer = nullptr;

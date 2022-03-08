@@ -21,6 +21,7 @@
 #include "weboscompositorconfig.h"
 #include "weboscompositorwindow.h"
 #include "webosautocompositor.h"
+#include "webosautocompositorwindow.h"
 
 #include "debugtypes.h"
 
@@ -95,4 +96,12 @@ int WebOSAutoCompositor::currentMouseDisplayId()
         return static_cast<WebOSCompositorWindow *>(currentMouseWindow)->displayId();
 
     return 0;
+}
+
+void WebOSAutoCompositor::postInit()
+{
+    WebOSAutoCompositorWindow *primaryWindow = static_cast<WebOSAutoCompositorWindow *>(windows()[0]);
+
+    primaryWindow->setPageFlipNotifier();
+    primaryWindow->initUpdateScheduler();
 }

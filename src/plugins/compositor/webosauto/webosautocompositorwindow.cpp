@@ -1,6 +1,6 @@
 /* @@@LICENSE
  *
- * Copyright (c) 2020-2021 LG Electronics, Inc.
+ * Copyright (c) 2020-2022 LG Electronics, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 #include "webossurfaceitem.h"
 #include "webosautocompositor.h"
 #include "webosautocompositorwindow.h"
+#include "updatescheduler.h"
 #include "debugtypes.h"
 
 #include <QGuiApplication>
@@ -35,6 +36,9 @@ static void pageFlipNotifier(void *key, unsigned int seq, unsigned int tv_sec, u
     QWaylandPresentationTime *ptTime = win ? win->compositor()->presentationTime() : nullptr;
     if (ptTime)
         ptTime->sendFeedback(win, seq, tv_sec, tv_usec*1000);
+
+    if (win)
+        UpdateScheduler::pageFlipNotifier(win, seq, tv_sec, tv_usec);
 }
 
 WebOSAutoCompositorWindow::WebOSAutoCompositorWindow(QString screenName, QString geometryString, QSurfaceFormat *surfaceFormat)
@@ -56,6 +60,8 @@ void WebOSAutoCompositorWindow::setPageFlipNotifier()
         }
         return false;
     }();
+
+    m_hasPageFlipNotifier = hasPageFlipNotifier;
 }
 
 static WebOSSurfaceItem* findWebOSSurfaceItem(QQuickItem *base, const QPointF& point)
