@@ -3,7 +3,6 @@
         "com.webos.surfacemanager/captureCompositorOutput"
     ],
     "surfacemanager.operation": [
-        "com.webos.surfacemanager/closeByAppId",
         "com.webos.surfacemanager/setAppMirroring"
     ],
     "surfacemanager.query": [
