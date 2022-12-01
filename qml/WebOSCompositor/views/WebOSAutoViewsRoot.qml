@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2021 LG Electronics, Inc.
+// Copyright (c) 2019-2022 LG Electronics, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,10 +27,10 @@ FocusScope {
     property alias home: homeViewId
     property alias popup: popupViewId
     property alias keyboard: keyboardViewId
+    property alias statusbar: statusbarViewId
+    property alias statusbarHotspotTop: statusbarHotspotTopId
     property alias voiceAssistant: voiceAssistantViewId
     property alias notification: notificationViewId
-    property alias volume: volumeViewId
-    property alias volumeHotspotTop: volumeHotspotTopId
     property alias homeHotspotBottom: homeHotspotBottomId
 
     FullscreenView {
@@ -69,6 +69,18 @@ FocusScope {
         model: PopupWindowModel {}
     }
 
+    WebOSAutoSystemUIView {
+        id: statusbarViewId
+        objectName: "statusbar" + compositorWindow.displayId
+        layerNumber: 8
+        consumeKeyEvents: true
+        appId: Settings.local.statusbarView.appId
+        model: WebOSAutoSystemUIWindowModel {
+            objectName: "statusbarWindowModel" + compositorWindow.displayId
+            appId: Settings.local.statusbarView.appId
+        }
+    }
+
     KeyboardView {
         id: keyboardViewId
         objectName: "keyboardView" + compositorWindow.displayId
@@ -99,25 +111,13 @@ FocusScope {
         }
     }
 
-    WebOSAutoSystemUIView {
-        id: volumeViewId
-        objectName: "volumeView" + compositorWindow.displayId
-        layerNumber: 15
-        consumeKeyEvents: true
-        appId: Settings.local.volumeView.appId
-        model: WebOSAutoSystemUIWindowModel {
-            objectName: "volumeWindowModel" + compositorWindow.displayId
-            appId: Settings.local.volumeView.appId
-        }
-    }
-
     TouchHotspot {
-        id: volumeHotspotTopId
+        id: statusbarHotspotTopId
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
-        height: Settings.local.volumeView.hotspotThickness
-        threshold: Settings.local.volumeView.hotspotThreshold
+        height: Settings.local.statusbarView.hotspotThickness
+        threshold: Settings.local.statusbarView.hotspotThreshold
         vertical: true
     }
 

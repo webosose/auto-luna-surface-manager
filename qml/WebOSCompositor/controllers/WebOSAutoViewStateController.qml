@@ -32,8 +32,8 @@ Item {
         function onSurfaceAdded(item) {
             if (views.keyboard)
                 views.keyboard.closeView();
-            if (views.volume)
-                views.volume.hide();
+            if (views.statusbar)
+                views.statusbar.hide();
             if (views.notification)
                 views.notification.hide();
             if (views.popup)
@@ -50,8 +50,8 @@ Item {
         function onSurfaceAdded(item) {
             if (views.keyboard)
                 views.keyboard.closeView();
-            if (views.volume)
-                views.volume.hide();
+            if (views.statusbar)
+                views.statusbar.hide();
             if (views.notification)
                 views.notification.hide();
             if (views.popup)
@@ -66,8 +66,8 @@ Item {
         function onOpening() {
             if (views.keyboard)
                 views.keyboard.closeView();
-            if (views.volume)
-                views.volume.hide();
+            if (views.statusbar)
+                views.statusbar.hide();
             if (views.notification)
                 views.notification.hide();
             if (views.popup)
@@ -82,8 +82,8 @@ Item {
         function onSurfaceAdded(item) {
             if (views.keyboard)
                 views.keyboard.closeView();
-            if (views.volume)
-                views.volume.hide();
+            if (views.statusbar)
+                views.statusbar.hide();
             if (views.notification)
                 views.notification.hide();
         }
@@ -98,10 +98,10 @@ Item {
     }
 
     Connections {
-        target: views.volumeHotspotTop
+        target: views.statusbarHotspotTop
         function onTriggered() {
-            if (views.volume)
-                views.volume.show();
+            if (views.statusbar)
+                views.statusbar.show();
         }
     }
 
