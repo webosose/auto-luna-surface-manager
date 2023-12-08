@@ -39,7 +39,6 @@ Item {
     Connections {
         target: compositorWindow
         function onDebugTouchUpdated(evt) {
-            console.log("DebugPattern:", evt);
             if (!evt)
                 return;
 
