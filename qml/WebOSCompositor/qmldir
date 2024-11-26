@@ -1,7 +1,6 @@
 module WebOSCompositor
 
 DefaultSettings 1.0 WebOSAutoDefaultSettings.qml
-WebOSAutoDebugPatternController 1.0 controllers/WebOSAutoDebugPatternController.qml
 ViewStateController 1.0 controllers/WebOSAutoViewStateController.qml
 BaseLunaServiceAPI 1.0 services/WebOSAutoBaseLunaServiceAPI.qml
 WebOSAutoSystemUIWindowModel 1.0 models/WebOSAutoSystemUIWindowModel.qml

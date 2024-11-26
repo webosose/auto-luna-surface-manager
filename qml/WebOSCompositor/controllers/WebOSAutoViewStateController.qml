@@ -25,8 +25,6 @@ Item {
     property var keyController
     property var views
 
-    WebOSAutoDebugPatternController { }
-
     Connections {
         target: views.fullscreen
         function onSurfaceAdded(item) {

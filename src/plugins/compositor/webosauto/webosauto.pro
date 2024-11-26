@@ -1,6 +1,6 @@
 # @@@LICENSE
 #
-# Copyright (c) 2020-2021 LG Electronics, Inc.
+# Copyright (c) 2020-2024 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,17 +21,15 @@ CONFIG += plugin
 
 TARGET = webosautocompositorplugin
 
-QT += weboscompositor gui-private quick-private waylandcompositor-private
+QT += weboscompositor gui-private waylandcompositor-private
 
 SOURCES = webosautocompositorplugin.cpp \
           webosautocompositor.cpp \
-          webosautocompositorwindow.cpp \
-          debugtypes.cpp
+          webosautocompositorwindow.cpp
 
 HEADERS = webosautocompositorplugin.h \
           webosautocompositor.h \
-          webosautocompositorwindow.h \
-          debugtypes.h
+          webosautocompositorwindow.h
 
 OTHER_FILES = webosautocompositorplugin.json
 

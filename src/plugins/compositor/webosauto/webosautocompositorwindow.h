@@ -22,7 +22,6 @@
 #include <WebOSCoreCompositor/weboscompositorwindow.h>
 #include "webosautocompositor.h"
 
-class DebugTouchEvent;
 class WebOSAutoCompositor;
 
 class WebOSAutoCompositorWindow : public WebOSCompositorWindow
@@ -32,15 +31,10 @@ class WebOSAutoCompositorWindow : public WebOSCompositorWindow
 public:
     explicit WebOSAutoCompositorWindow(QString screenName = QString(), QString geometryString = QString(), QSurfaceFormat *surfaceFormat = 0);
 
-    Q_INVOKABLE WebOSSurfaceItem* itemAt(const QPointF& point);
-
     void setPageFlipNotifier();
     void invalidateCursor() override;
 
     WebOSAutoCompositor *compositor() const { return qobject_cast<WebOSAutoCompositor*>(WebOSCompositorWindow::compositor()); }
-
-signals:
-    void debugTouchUpdated(DebugTouchEvent* evt);
 
 protected:
     bool event(QEvent *e) override;
